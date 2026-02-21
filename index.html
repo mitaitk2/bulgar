@@ -93,22 +93,37 @@
         .card ul li i { font-size: 0.9rem; margin: 0; color: var(--accent); }
 
         /* Butonlar */
-        .btns { display: flex; gap: 15px; justify-content: center; margin-top: 40px; }
+        .btns { display: flex; gap: 15px; justify-content: center; align-items: center; margin-top: 40px; flex-wrap: wrap; }
         .btn {
             padding: 16px 32px;
             border-radius: 16px;
             font-weight: 700;
             text-decoration: none;
             transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
         }
-        .btn-main { background: var(--accent); color: white; }
+        .btn-main { background: var(--accent); color: white; border: none; cursor: pointer; }
         .btn-main:hover { box-shadow: 0 0 30px rgba(88, 101, 242, 0.4); transform: scale(1.05); }
-        .btn-sub { border: 1px solid var(--border); color: white; }
+        .btn-sub { border: 1px solid var(--border); color: white; cursor: pointer; background: transparent; }
         .btn-sub:hover { background: white; color: black; }
+
+        /* IP Gösterge Kutusu */
+        #ipBox {
+            background: rgba(88, 101, 242, 0.1);
+            border: 1px dashed var(--accent);
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            display: none;
+            animation: fadeInUp 0.4s ease;
+        }
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 3rem; }
             .grid { grid-template-columns: 1fr; }
+            .btns { flex-direction: column; }
         }
     </style>
 </head>
@@ -126,11 +141,28 @@
         </nav>
 
         <section class="hero">
-            <h1>Karantina</span></h1>
+            <h1>Karantina</h1>
             <p>Gelişmiş bot destek altyapısı ve aktif Discord topluluğumuzla projelerini en güvenli şekilde büyüt.</p>
+            
             <div class="btns">
-                <a href="https://discord.com/oauth2/authorize?client_id=1452704409233653962" class="btn btn-main">Botu Davet Et</a>
-                <a href="https://discord.gg/karantina" class="btn btn-sub">Sunucuya Katıl</a>
+                <a href="https://discord.com/oauth2/authorize?client_id=1452704409233653962" class="btn btn-main">
+                    <i class="fas fa-plus"></i> Botu Davet Et
+                </a>
+                
+                <button onclick="getIpAddress()" class="btn btn-sub" id="ipBtn">
+                    <i class="fas fa-network-wired"></i> IP Göster
+                </button>
+
+                <a href="https://discord.gg/karantina" class="btn btn-sub">
+                    <i class="fab fa-discord"></i> Sunucuya Katıl
+                </a>
+            </div>
+
+            <div style="margin-top: 20px; display: flex; justify-content: center;">
+                <div id="ipBox">
+                    <span style="color: var(--text-dim);">IP Adresiniz:</span> 
+                    <span id="userIp" style="color: white; font-weight: bold;">Yükleniyor...</span>
+                </div>
             </div>
         </section>
 
@@ -158,6 +190,26 @@
             </div>
         </div>
     </div>
+
+    <script>
+        async function getIpAddress() {
+            const ipBox = document.getElementById('ipBox');
+            const userIp = document.getElementById('userIp');
+            const ipBtn = document.getElementById('ipBtn');
+
+            ipBox.style.display = 'block';
+            ipBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sorgulanıyor...';
+
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                userIp.innerText = data.ip;
+                ipBtn.innerHTML = '<i class="fas fa-check"></i> IP Tamam!';
+            } catch (error) {
+                userIp.innerText = 'Hata oluştu!';
+                ipBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Tekrar Dene';
+            }
+        }
+    </script>
 </body>
 </html>
-
