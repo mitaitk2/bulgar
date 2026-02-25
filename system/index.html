@@ -2,65 +2,152 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Karantina Sunucu Durumu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karantina & Yeniden</title>
     <style>
-        /* Sitenin havasına uygun karanlık tema */
-        .discord-card {
-            background: #2f3136;
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            width: 300px;
-            font-family: 'Segoe UI', sans-serif;
-            border: 2px solid #5865f2;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        /* Karantina Karanlık Tema CSS */
+        body {
+            background-color: #0f0f0f; /* Tam siyah/gri arası */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        .status-dot {
-            height: 10px;
-            width: 10px;
-            background-color: #3ba55c;
-            border-radius: 50%;
-            display: inline-block;
-            margin-right: 5px;
+
+        .karantina-container {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-left: 5px solid #ff0000; /* Sol tarafa kırmızı bir şerit (Adalet/Kaos vurgusu) */
+            padding: 25px;
+            width: 100%;
+            max-width: 550px;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7);
         }
-        .count { font-weight: bold; color: #5865f2; }
-        .btn-join {
+
+        .partner-text {
+            color: #ffffff;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 15px;
+        }
+
+        .partner-text h1 {
+            font-size: 18px;
+            color: #ff0000;
+            margin-bottom: 10px;
+        }
+
+        .server-info {
+            display: flex;
+            justify-content: space-between;
+            background: #111;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .info-box {
+            text-align: center;
+        }
+
+        .info-label {
+            display: block;
+            color: #888;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .join-button {
             display: block;
             text-align: center;
-            background: #5865f2;
+            background: #5865f2; /* Discord Mavisi */
             color: white;
             text-decoration: none;
-            padding: 10px;
-            margin-top: 15px;
-            border-radius: 5px;
-            transition: 0.3s;
+            padding: 14px;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
         }
-        .btn-join:hover { background: #4752c4; }
+
+        .join-button:hover {
+            background: #4752c4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(88, 101, 242, 0.4);
+        }
+
+        .mentions {
+            color: #4f545c;
+            font-size: 10px;
+            margin-top: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-<div class="discord-card">
-    <h2 id="server-name">Yükleniyor...</h2>
-    <p><span class="status-dot"></span> Aktif Üye: <span id="online-count" class="count">0</span></p>
-    <p>👥 Toplam Üye: <span id="total-count" class="count">Bilinmiyor</span></p>
-    <a href="discord.gg/karantina" target="_blank" class="btn-join">Discord Sunucusuna Katıl</a>
+<div class="karantina-container">
+    <div class="partner-text">
+        ** [K A R A N T I N A & @YENIDEN][discord.gg/karantina] **
+        <h1>⤹ KARANTINA & @YENIDEN Sunucusuna Katil!?</h1>
+        ** `👑`﹕✶⋆.˚﹕K A R A N T I N A sunucumuz toplum icerisinde Kara Mizah sunucusu olarak geçen bir sunucudur adaletin adresidir**
+    </div>
+
+    <div class="server-info">
+        <div class="info-box">
+            <span class="info-label">Üye Sayısı</span>
+            <span class="info-value" id="status" style="color: #43b581;">Aktif</span>
+        </div>
+        <div class="info-box">
+            <span class="info-label">Çevrimiçi Sayısı</span>
+            <span class="info-value" id="online-count">0</span>
+        </div>
+        <div class="info-box">
+            <span class="info-label">Sesli Sayısı</span>
+            <span class="info-value" id="voice-count">0</span>
+        </div>
+    </div>
+
+    <a href="https://discord.gg/karantina" target="_blank" class="join-button">KARANTİNAYA KATIL!</a>
+
+    <div class="mentions">
+        [||@everyone||] • [||@here||]
+    </div>
 </div>
 
 <script>
-    // SUNUCU_ID yazan yere Discord sunucunun ID'sini yaz kanka
-    const serverID = "1403472039670583487"; 
+    // Sunucu ID'ni buraya yaz kanka (Widget açık olmalı!)
+    const SERVER_ID = "1403472039670583487"; 
 
-    fetch(`https://discord.com/api/guilds/${serverID}/widget.json`)
-    .then(response => response.json())
-    .then(data => {
-        document.getElementById('server-name').innerText = data.name;
-        document.getElementById('online-count').innerText = data.presence_count;
-        // Not: Widget API anlık aktifleri verir, toplam üye için bot veya manuel girmek gerekir.
-    })
-    .catch(err => console.error("Veri çekilemedi kanka, Widget kapalı olabilir!"));
+    fetch(`https://discord.com/api/guilds/${SERVER_ID}/widget.json`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('online-count').innerText = data.presence_count;
+            // Kanallardaki üyeleri sayarak seste kaç kişi olduğunu bulalım
+            let voiceCount = 0;
+            if(data.members) {
+                voiceCount = data.members.filter(m => m.channel_id).length;
+            }
+            document.getElementById('voice-count').innerText = voiceCount;
+        })
+        .catch(err => {
+            console.error("Veri çekilemedi. Widget kapalı olabilir.");
+            document.getElementById('status').innerText = "Hata";
+            document.getElementById('status').style.color = "red";
+        });
 </script>
 
 </body>
 </html>
-
