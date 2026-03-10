@@ -1,101 +1,37 @@
-/* B U L G A R V4.0 - OFFICIAL SYSTEM */
-
-const config = {
-    brandName: "B U L G A R",
-    announcements: [
-        { yazar: "B U L G A R", icerik: "Sistem tamamen yenilendi. Güç artık elimizde." },
-        { yazar: "Yönetim", icerik: "Yeni duyurlar yayınlandı, duyuru panelini kontrol edin." }
-    ]
-};
-
 const app = document.getElementById('app');
 
-// 1. ANA SAYFA (B U L G A R Karşılama)
+// Ana Sayfa
 function renderHome() {
     app.innerHTML = `
-        <div class="min-h-screen flex flex-col items-center justify-center relative px-6 overflow-hidden">
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-red-600/5 rounded-full blur-[120px] pointer-events-none"></div>
-
-            <div class="z-10 text-center max-w-4xl animate-in zoom-in duration-1000">
-                <span class="px-5 py-2 bg-white/5 border border-white/10 rounded-full text-zinc-400 text-[10px] font-bold tracking-[0.5em] uppercase">The Legacy of Power</span>
-                
-                <h1 class="text-7xl md:text-[12rem] font-black mt-12 tracking-[-0.05em] leading-none select-none">
-                    ${config.brandName.split(' ').join('<span class="text-red-600"> </span>')}
-                </h1>
-                
-                <p class="text-zinc-500 text-lg md:text-xl mt-8 max-w-2xl mx-auto leading-relaxed font-medium">
-                    Düzenin yeniden yazıldığı, sınırların zorlandığı tek nokta. <br>
-                    <span class="text-zinc-300">Hoş geldin, burası son durak.</span>
-                </p>
-
-                <div class="flex flex-col md:flex-row gap-5 mt-16 justify-center items-center">
-                    <a href="https://discord.gg/karantina" target="_blank" class="w-full md:w-auto px-12 py-5 bg-white text-black rounded-full hover:bg-zinc-200 transition-all font-extrabold text-sm tracking-widest transform hover:scale-105 active:scale-95 shadow-2xl shadow-white/10">
-                        Sistem
-                    </a>
-                    <button onclick="navigate('duyurular')" class="w-full md:w-auto px-12 py-5 bg-transparent border border-zinc-800 text-zinc-400 rounded-full hover:border-white hover:text-white transition-all font-extrabold text-sm tracking-widest uppercase">
-                        Duyurular
-                    </button>
-                </div>
-            </div>
-
-            <div class="absolute bottom-12 flex flex-col items-center gap-4">
-                <div class="w-px h-12 bg-gradient-to-b from-transparent to-zinc-800"></div>
-                <p class="text-zinc-800 text-[9px] tracking-[1em] uppercase font-black">
-                    OFFICIAL ${config.brandName} PROJECT
-                </p>
+        <div class="flex flex-col items-center justify-center min-h-screen text-center p-6">
+            <h1 class="text-8xl font-black italic tracking-tighter">B U L G A R</h1>
+            <div class="flex gap-4 mt-8">
+                <button onclick="renderAnnouncements()" class="px-8 py-3 bg-red-600 rounded-full font-bold">DUYURULAR</button>
+                <a href="https://discord.gg/bulgar" class="px-8 py-3 border border-zinc-700 rounded-full">SUNUCU</a>
             </div>
         </div>
     `;
 }
 
-// 2. DUYURULAR SAYFASI
-function renderAnnouncements() {
+// Duyurular Sayfası
+async function renderAnnouncements() {
+    const res = await fetch('duyurular.json');
+    const data = await res.json();
+
     app.innerHTML = `
-        <div class="min-h-screen p-8 md:p-24 animate-in slide-in-from-bottom duration-700 bg-[#030303]">
-            <div class="max-w-5xl mx-auto">
-                <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-6">
-                    <div>
-                        <span class="text-red-600 text-xs font-black tracking-[0.4em] uppercase">Arşiv & Haberler</span>
-                        <h2 class="text-6xl font-black mt-4 tracking-tighter italic uppercase text-white">${config.brandName}</h2>
+        <div class="max-w-xl mx-auto p-10">
+            <h2 class="text-3xl font-black mb-6 border-b border-red-600 pb-2">DUYURULAR</h2>
+            <div class="space-y-4">
+                ${data.map(a => `
+                    <div class="bg-zinc-900 p-4 rounded-xl border border-zinc-800">
+                        <p class="text-xs text-red-500 font-bold">${a.tarih} | ${a.yazar}</p>
+                        <p class="mt-2 text-md">${a.icerik}</p>
                     </div>
-                    <button onclick="navigate('home')" class="group flex items-center gap-3 text-zinc-500 hover:text-white transition-all">
-                        <span class="text-xs font-bold uppercase tracking-widest">Geri Dön</span>
-                        <div class="w-8 h-8 rounded-full border border-zinc-800 flex items-center justify-center group-hover:border-white">→</div>
-                    </button>
-                </div>
-
-                <div class="grid gap-6">
-                    ${config.announcements.map(a => `
-                        <div class="group bg-[#080808] border border-zinc-900 p-10 rounded-[2.5rem] hover:bg-zinc-900/30 transition-all duration-500">
-                            <div class="flex justify-between items-center mb-6">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-1.5 h-1.5 bg-red-600 rounded-full"></div>
-                                    <span class="text-white font-bold text-xs uppercase tracking-widest">${a.yazar}</span>
-                                </div>
-                                <span class="text-zinc-700 text-[10px] font-bold">${a.tarih}</span>
-                            </div>
-                            <p class="text-zinc-400 text-2xl font-medium leading-snug group-hover:text-zinc-100 transition-colors">"${a.icerik}"</p>
-                        </div>
-                    `).join('')}
-                </div>
+                `).join('')}
             </div>
+            <button onclick="renderHome()" class="mt-8 text-zinc-500">← Geri Dön</button>
         </div>
     `;
 }
 
-// 3. NAVİGASYON
-function navigate(page) {
-    window.location.hash = page;
-    if(page === 'announcements') renderAnnouncements();
-    else renderHome();
-}
-
-window.onhashchange = () => {
-    const hash = window.location.hash.replace('#', '');
-    navigate(hash);
-};
-
-window.onload = () => {
-    const hash = window.location.hash.replace('#', '');
-    navigate(hash || 'home');
-};
+renderHome();
