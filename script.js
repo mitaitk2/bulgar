@@ -1,87 +1,108 @@
 const app = document.getElementById('app');
 
-// 1. Sayfa: Ana Giriş (EnİyiSunucu)
+// 1. Sayfa: GELİŞTİRİLMİŞ ANA SAYFA
 function renderHome() {
     app.innerHTML = `
-        <div class="flex flex-col items-center justify-center h-[70vh]">
-            <h1 class="soygun-title text-8xl font-black italic text-[#f23f43] drop-shadow-2xl mb-2">SOYGUN</h1>
-            <p class="text-zinc-500 text-lg font-bold tracking-widest uppercase mb-10">Karantina Operasyon Merkezi</p>
-            <div class="max-w-xl text-center text-zinc-300 leading-relaxed mb-12">
-                "Soygun Sunucusu'nun resmi operasyon paneline hoş geldiniz. Burası sunucu üyelerinin ve bot sistemlerinin kalbidir. Sisteme erişmek ve operasyonun bir parçası olmak için giriş yapın."
-            </div>
-            <div class="flex gap-6">
-                <a href="https://discord.gg/karantina" target="_blank" class="bg-[#f23f43] hover:bg-[#d8363a] text-white px-10 py-4 rounded-md font-black transition-all transform hover:scale-105">SUNUCUYA KATIL</a>
-                <button onclick="renderBot()" class="bg-transparent border-2 border-zinc-700 hover:border-zinc-500 text-white px-10 py-4 rounded-md font-black transition-all">SİSTEMİ AÇ</button>
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-zinc-600 font-bold tracking-[0.5em] uppercase mb-4 text-sm">Kuralları Unuttuğun Yer</h2>
+            <h1 class="soygun-logo text-7xl md:text-[9rem] font-black text-[#f23f43] glow-text mb-6 leading-none">SOYGUN</h1>
+            
+            <div class="w-24 h-1 bg-[#f23f43] mx-auto mb-10 rounded-full glow-text"></div>
+            
+            <p class="text-zinc-400 text-xl leading-relaxed mb-12 font-light">
+                Sıradan sunucuları unut. Burası sadece <span class="text-white font-bold">davetlilere</span> ve <span class="text-white font-bold">sınırları zorlayanlara</span> özel bir yeraltı kulübü. Karantina dünyasının en gizli odalarına adım atmaya hazır mısın?
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="https://discord.gg/karantina" target="_blank" class="bg-[#f23f43] hover:bg-[#ff4d51] text-white px-12 py-5 rounded-md font-black transition-all shadow-[0_0_20px_rgba(242,63,67,0.4)] tracking-widest text-lg">VIP GİRİŞİ YAP</a>
+                <button onclick="renderServer()" class="bg-transparent border border-zinc-700 hover:border-white text-zinc-300 hover:text-white px-12 py-5 rounded-md font-bold transition-all tracking-widest text-lg">İÇERİDE NE VAR?</button>
             </div>
         </div>
     `;
 }
 
+// 2. Sayfa: BOT KOMUTLARI (🤖)
 function renderBot() {
     app.innerHTML = `
-        <div class="max-w-4xl mx-auto">
-            <h2 class="soygun-title text-3xl font-black mb-10 border-b border-[#f23f43] pb-4 text-[#f23f43]">SOYGUN OPERASYON BOTU (SOBOT)</h2>
+        <div class="max-w-5xl mx-auto w-full">
+            <h2 class="soygun-logo text-4xl font-black mb-4 text-white">SOBOT <span class="text-zinc-600">SİSTEMİ</span></h2>
+            <p class="text-zinc-400 mb-12 text-lg">Sunucu içindeki tüm premium özellikleri bu komutlarla yönetirsin.</p>
             
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="discord-card p-6 flex gap-4">
-                    <span class="text-4xl">⚡</span>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Yüksek Hız</h3>
-                        <p class="text-sm text-zinc-400 mt-1">Operasyonel komutları saniyesinde işler ve siteye iletir.</p>
+                <div class="vip-card p-6 flex flex-col gap-3">
+                    <div class="flex items-center gap-4">
+                        <span class="command-badge">/vip-ol</span>
                     </div>
+                    <p class="text-zinc-400 text-sm mt-2">Özel odalara, gizli ses kanallarına ve premium içeriklere anında erişim sağlarsın. Sadece seçkin üyeler kullanabilir.</p>
                 </div>
 
-                <div class="discord-card p-6 flex gap-4">
-                    <span class="text-4xl">🛠️</span>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Otonom Kontrol</h3>
-                        <p class="text-sm text-zinc-400 mt-1">Sunucu içindeki işlemleri otomatik yönetir, insan hatasını sıfırlar.</p>
+                <div class="vip-card p-6 flex flex-col gap-3">
+                    <div class="flex items-center gap-4">
+                        <span class="command-badge">/gizli-oda</span>
                     </div>
+                    <p class="text-zinc-400 text-sm mt-2">Sunucuda kimsenin göremediği, sadece sana ve davet ettiğin kişilere özel kilitli bir loca oluşturur.</p>
                 </div>
 
-                <div class="discord-card p-6 flex gap-4">
-                    <span class="text-4xl">🛡️</span>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Sunucu Koruması</h3>
-                        <p class="text-sm text-zinc-400 mt-1">Sunucuya zarar verecek eylemleri anında engeller ve operatörleri uyarır.</p>
+                <div class="vip-card p-6 flex flex-col gap-3">
+                    <div class="flex items-center gap-4">
+                        <span class="command-badge">/profil</span>
                     </div>
+                    <p class="text-zinc-400 text-sm mt-2">Mevcut itibarını, kulüp içindeki seviyeni ve sahip olduğun özel rolleri şık bir kart halinde gösterir.</p>
                 </div>
 
-                <div class="discord-card p-6 flex gap-4">
-                    <span class="text-4xl">✅</span>
-                    <div>
-                        <h3 class="font-bold text-lg text-white">Basit Kullanım</h3>
-                        <p class="text-sm text-zinc-400 mt-1">`/sobot` komutlarıyla her şey parmaklarınızın ucunda.</p>
+                <div class="vip-card p-6 flex flex-col gap-3">
+                    <div class="flex items-center gap-4">
+                        <span class="command-badge">/anonim</span>
                     </div>
+                    <p class="text-zinc-400 text-sm mt-2">Kimliğini tamamen gizleyerek itiraf veya özel kanallara mesaj göndermeni sağlar. İzin bırakmaz.</p>
                 </div>
             </div>
 
-            <button onclick="renderHome()" class="mt-12 text-zinc-600 hover:text-red-500 font-bold transition-all uppercase text-xs tracking-widest">← Merkeze Dön</button>
+            <button onclick="renderHome()" class="mt-16 text-zinc-600 hover:text-white font-bold transition-all text-sm tracking-widest uppercase flex items-center gap-2"><span>←</span> Lobiye Dön</button>
         </div>
     `;
 }
 
-// 3. Sayfa: Yardım / Nasıl Çalışır? (Soru İşareti)
-function renderHelp() {
+// 3. Sayfa: SUNUCU TANITIMI (❓)
+function renderServer() {
     app.innerHTML = `
-        <div class="max-w-3xl mx-auto">
-            <h2 class="soygun-title text-3xl font-black mb-10 border-b border-[#f23f43] pb-4 text-[#f23f43]">OPERASYON EL KİTABI</h2>
+        <div class="max-w-5xl mx-auto w-full">
+            <h2 class="soygun-logo text-4xl font-black mb-4 text-white">NEDEN <span class="text-[#f23f43]">BURADASIN?</span></h2>
+            <p class="text-zinc-400 mb-12 text-lg">Burası bir Discord sunucusundan çok daha fazlası. Burası gece hayatının dijital hali.</p>
             
-            <div class="space-y-6 text-zinc-300 leading-relaxed">
-                <p><strong>Adım 1: Sunucuya Erişin</strong></p>
-                <p class="text-sm text-zinc-400 ml-4">Ana sayfadaki "SUNUCUYA KATIL" butonunu kullanarak Karantina Sunucusu'na giriş yapın.</p>
-                
-                <p><strong>Adım 2: SOBOT'u Keşfedin</strong></p>
-                <p class="text-sm text-zinc-400 ml-4">Bot sekmesindeki (🤖) özellikleri inceleyin ve sunucuda `/help so_bot` yazarak komutları öğrenin.</p>
-                
-                <p><strong>Adım 3: Operasyona Başlayın</strong></p>
-                <p class="text-sm text-zinc-400 ml-4">Sunucu içindeki görevleri tamamlayarak ve SOBOT'un komutlarını kullanarak rütbenizi yükseltin.</p>
+            <div class="space-y-8">
+                <div class="flex gap-6 items-start vip-card p-8">
+                    <span class="text-5xl drop-shadow-lg">🍷</span>
+                    <div>
+                        <h3 class="text-2xl font-black text-white mb-2">Exclusive Ortam</h3>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">Girişteki sıkı denetim sayesinde içeride sadece kaliteli bir kitle var. Rahatsız edilmeden, elit bir sohbetin tadını çıkarabileceğin kilitli odalar seni bekliyor.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start vip-card p-8">
+                    <span class="text-5xl drop-shadow-lg">🔞</span>
+                    <div>
+                        <h3 class="text-2xl font-black text-white mb-2">Filtresiz Eğlence</h3>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">Burada kurallar dışarıdaki gibi katı değil. Yetişkinlere özel içerikler, sansürsüz gece sohbetleri ve sınırların aşıldığı özel etkinlikler her gece aktif.</p>
+                    </div>
+                </div>
+
+                <div class="flex gap-6 items-start vip-card p-8">
+                    <span class="text-5xl drop-shadow-lg">🎲</span>
+                    <div>
+                        <h3 class="text-2xl font-black text-white mb-2">VIP Etkinlikler</h3>
+                        <p class="text-zinc-400 leading-relaxed text-sm md:text-base">Sadece belirli rütbeye ulaşmış üyelerin katılabildiği çekilişler, özel yayınlar ve sabahlara kadar süren sesli loca muhabbetleri.</p>
+                    </div>
+                </div>
             </div>
 
-            <button onclick="renderHome()" class="mt-12 text-zinc-600 hover:text-red-500 font-bold transition-all uppercase text-xs tracking-widest">← Merkeze Dön</button>
+            <div class="mt-16 border-t border-zinc-800 pt-10 text-center">
+                <p class="text-zinc-500 italic mb-6">"İçeri girmek bir ayrıcalıktır, içeride kalmak ise bir sanattır."</p>
+                <button onclick="renderHome()" class="text-zinc-600 hover:text-white font-bold transition-all text-sm tracking-widest uppercase">Lobiye Dön</button>
+            </div>
         </div>
     `;
 }
 
-// Başlangıçta Ana Sayfayı Göster
+// Uygulama başladığında Ana Sayfayı yükle
 renderHome();
